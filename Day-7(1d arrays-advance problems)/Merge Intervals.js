@@ -85,7 +85,7 @@ console.log(mergeIntervals([[1, 3], [6, 9]], [2,6]));
 
 
 // Time Complexity - O(n)
-// Space Complexity - O(n)
+// Space Complexity - O(n) in worst case
 
 
 /*
