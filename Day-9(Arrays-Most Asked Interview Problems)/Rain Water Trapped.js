@@ -89,76 +89,57 @@
 */
 
 // Optimised appoach- using stack findLeftMax and findRightmax for each bar simoultaneously
+
+
 function rainWaterTrapped(A){
-    let n = A.length;
-    let leftMax = new Array(n);
-    let rightMax = new Array(n);
-    let stack =[];
-    // constructing left max
-    for(let i=0; i<n; i++){
-        while(stack.length > 0 && top(stack) <= A[i]){
-            stack.pop();
-        }
-        if(stack.length == 0){
-            leftMax[i] = -1;
-            stack.push(A[i]);
-        }else{
-            leftMax[i] = top(stack)
-        }
-    }
-    stack = new Array();
-    // constructing right max
-    for(let i=n-1; i>=0; i--){
-        while(stack.length >0 && top(stack) <= A[i]){
-            stack.pop();
-        }
-        if(stack.length == 0){
-            rightMax[i] = -1;
-            stack.push(A[i]);
-        }else{
-            rightMax[i] = top(stack);
-        }
-    }
-    // getting total water trapped
-    let totalWater =0;
-    for(let i=1; i<n-1; i++){
-        totalWater += Math.max(Math.min(leftMax[i], rightMax[i]) - A[i], 0);
-    }
-    return totalWater;
+	left = findLeftMax(A);
+	right = findRightMax(A);
+	let totalWaterTrapped = 0;
+	for(let i=0; i< A.length; i++){
+		let min = Math.min(left[i], right[i]);
+		totalWaterTrapped +=  min > 0 ? min- A[i] : 0;
+	}
+	return totalWaterTrapped;
+}
+
+
+
+function findLeftMax(A){
+	let arr = [], stack = [];
+	for(let i =0; i< A.length; i++){
+		while(stack.length != 0 && top(stack) < A[i]){
+			stack.pop();
+		}
+		if(stack.length == 0){
+			arr[i] = -1;
+			stack.push(A[i]);
+		}else{
+			arr[i] = top(stack);
+		}
+	}
+	return arr;
+}
+
+
+function findRightMax(A){
+	let arr =[], stack = [];
+	for(let i = A.length-1; i>=0; i--){
+		while(stack.length != 0 && top(stack) < A[i]){
+			stack.pop()
+		}
+		if(stack.length == 0){
+			arr[i] = -1;
+			stack.push(A[i]);
+		}else{
+			arr[i] = top(stack);
+		}
+	}
+	return arr;
 }
 
 function top(stack){
-    let n = stack.length;
-    return n ==0? null: stack[n-1];
-}
-
-
-// console.log(rainWaterTrapped([0, 1, 0, 2]));
-// console.log(rainWaterTrapped([5, 4, 1, 4, 3, 2, 7]));
-console.log(rainWaterTrapped([0,1,0,2,1,0,1,3,2,1,2,1]));
-
-// Time Complexity - O(n)
-// Space Complexity - 3*n => O(n)
-
-
-
-// Simpler verion of code
-
-function rainWaterTrapped(A){
-    let n =A.length;
-    let lA = [], rA=[];
-    for(let i=0;i<n;i++){
-        lA[i] = i==0? 0: Math.max(lA[i-1], A[i-1]); 
-    }
-    for(let i=n-1; i>=0; i--){
-        rA[i] = i == (n-1)? 0: Math.max(rA[i+1], A[i+1])
-    }
-    let sum =0;
-    for(let i=1; i<n-1; i++){
-        let waterStored = Math.min(lA[i], rA[i]) - A[i] ; 
-        sum += waterStored > 0 ? waterStored: 0; 
-    }
-    return sum;
+	let n = stack.length;
+	return n > 0 ?  stack[n-1] : null;
 }
 
 // Time Complexity: O(n)
