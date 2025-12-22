@@ -44,6 +44,8 @@ Explanation 1:
 Given vector is [1, 2, 3].
 The returned vector should be [1, 2, 4] as 123 + 1 = 124.
 
+*/
+
 // Code
 
 function addOneToNumber(A){
@@ -70,7 +72,5 @@ function addOneToNumber(A){
 	return A;
 }
 
-Time Complexiy - O(n)
-Space Complexity - O(1)
-
- */
+// Time Complexiy - O(n)
+// Space Complexity - O(1)
