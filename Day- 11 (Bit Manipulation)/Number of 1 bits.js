@@ -39,9 +39,9 @@
 
 # Example Explanation
 
-    Explaination 1:
+    Explanation 1:
     11 is represented as 1011 in binary.
-    Explaination 2:
+    Explanation 2:
     6 is represented as 110 in binary.
 
 
