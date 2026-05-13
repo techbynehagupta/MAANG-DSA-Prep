@@ -46,7 +46,7 @@ def main() -> None:
         return
 
     raw = ti.get("contents")
-    if raw is None:
+    if raw is None:``
         raw = ti.get("content", "")
     if not isinstance(raw, str):
         _allow()

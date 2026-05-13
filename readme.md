@@ -1,9 +1,9 @@
-DSA Preparation for MAANG Companies
+# DSA Preparation for MAANG Companies
 
 Welcome to your ultimate DSA (Data Structures & Algorithms) Preparation repository for cracking coding interviews at MAANG (Meta, Apple, Amazon, Netflix, Google) and top tech companies. This repo is designed to help you study systematically, covering topic-wise questions, pattern-level problems, and day-wise practice with notes.
 
 
-📚 Repository Structure
+## 📚 Repository Structure
 
 This repository is organized to make your preparation structured and efficient:
 
