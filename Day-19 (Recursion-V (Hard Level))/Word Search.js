@@ -90,7 +90,7 @@ class Solution {
 # Complexity Analysis
 
 Time Complexity
-    O(N × M × 4^L)- N*M outer loop and then for each charcater we are going in 4 directions till L length
+    O(N × M × 3^L)- N*M outer loop and then for each charcater we are going in 3 directions till L length as used array preventing to go in 4th direction
     L: word length
     N*M- Matrix
 
