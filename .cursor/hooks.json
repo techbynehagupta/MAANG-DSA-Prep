@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "python3 .cursor/hooks/apply_js_template.py",
+        "matcher": "Write"
+      }
+    ]
+  }
+}
