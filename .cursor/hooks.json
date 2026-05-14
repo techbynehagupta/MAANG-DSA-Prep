@@ -5,6 +5,10 @@
       {
         "command": "python3 .cursor/hooks/apply_js_template.py",
         "matcher": "Write"
+      },
+      {
+        "command": "python3 .cursor/hooks/maang_push_shell.py",
+        "matcher": "Shell"
       }
     ]
   }
