@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Terminal entrypoint (Agent uses the preToolUse hook; zsh needs this script on PATH or ./maang-push).
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec bash "$ROOT/.cursor/hooks/push-main.sh" "$@"

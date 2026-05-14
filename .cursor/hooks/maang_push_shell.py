@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""preToolUse: expand `maang-push <msg>` Shell tool calls into push-main.sh (add + commit + push)."""
+"""preToolUse: `maang-push` / `maang-push <msg>` -> push-main.sh (add + commit + push + .js filename hints)."""
 from __future__ import annotations
 
 import json
@@ -50,21 +50,16 @@ def main() -> None:
         return
 
     tail = stripped[len("maang-push") :].strip()
-    if not tail:
-        _allow()
-        return
 
-    try:
-        parts = shlex.split(tail, posix=True)
-    except ValueError:
-        _allow()
-        return
-
-    if not parts:
-        _allow()
-        return
-
-    msg = parts[0] if len(parts) == 1 else " ".join(parts)
+    user_msg: str | None = None
+    if tail:
+        try:
+            parts = shlex.split(tail, posix=True)
+        except ValueError:
+            _allow()
+            return
+        if parts:
+            user_msg = parts[0] if len(parts) == 1 else " ".join(parts)
 
     cwd = data.get("cwd") or os.getcwd()
     if not isinstance(cwd, str):
@@ -76,7 +71,12 @@ def main() -> None:
         return
 
     script = os.path.join(root, ".cursor", "hooks", "push-main.sh")
-    inner = f"cd {shlex.quote(root)} && exec bash {shlex.quote(script)} {shlex.quote(msg)}"
+    # Agent shell is non-interactive: never wait for read; script uses staged .js names when message omitted.
+    args = [shlex.quote(script), "--no-prompt"]
+    if user_msg is not None and user_msg.strip():
+        args.append(shlex.quote(user_msg.strip()))
+
+    inner = f"cd {shlex.quote(root)} && exec bash {' '.join(args)}"
     new_cmd = f"bash -lc {shlex.quote(inner)}"
 
     updated = dict(ti)
