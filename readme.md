@@ -2,6 +2,9 @@
 
 Welcome to your ultimate DSA (Data Structures & Algorithms) Preparation repository for cracking coding interviews at MAANG (Meta, Apple, Amazon, Netflix, Google) and top tech companies. This repo is designed to help you study systematically, covering topic-wise questions, pattern-level problems, and day-wise practice with notes.
 
+# How to use repo
+1. Whenever any js file is created template.md will automatically be copy pasted so that it follows the same structure
+2. To push just write ./maang-push in the terminal to push all the changes it'll automatically add, commit and push the message to github. Commit message would be by default filename
 
 ## 📚 Repository Structure
 
