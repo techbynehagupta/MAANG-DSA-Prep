@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Stage all, commit, push to origin/main (branch must be main).
-# Appends "added <slug>" for each staged .js file (e.g. Lower bound.js -> added lowerbound).
+# Appends "added <name>" for each staged .js file (basename lowercased; spaces kept, e.g. Lower bound.js -> added lower bound).
 set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
@@ -28,7 +28,7 @@ user_msg="${*:-}"
 
 git add -A
 
-# Build "added lowerbound, added foobar" from staged *.js paths
+# Build "added lower bound, added foo bar" from staged *.js paths (spaces preserved)
 auto_parts=()
 while IFS= read -r -d '' f; do
   [[ -n "$f" ]] || continue
@@ -38,9 +38,9 @@ while IFS= read -r -d '' f; do
   esac
   bn=$(basename "$f")
   base="${bn%.js}"
-  slug=$(printf '%s' "$base" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')
-  [[ -n "$slug" ]] || continue
-  auto_parts+=("added ${slug}")
+  label=$(printf '%s' "$base" | tr '[:upper:]' '[:lower:]')
+  [[ -n "${label// }" ]] || continue
+  auto_parts+=("added ${label}")
 done < <(git diff --cached -z --name-only --diff-filter=ACM)
 
 auto_msg=""
