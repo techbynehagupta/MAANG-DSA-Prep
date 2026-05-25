@@ -44,13 +44,16 @@ while IFS= read -r -d '' f; do
 done < <(git diff --cached -z --name-only --diff-filter=ACM)
 
 auto_msg=""
-for p in "${auto_parts[@]}"; do
-  if [[ -n "$auto_msg" ]]; then
-    auto_msg+=", ${p}"
-  else
-    auto_msg="${p}"
-  fi
-done
+# Bash 3.2 (macOS default) + set -u: empty "${arr[@]}" is "unbound"
+if [[ ${#auto_parts[@]} -gt 0 ]]; then
+  for p in "${auto_parts[@]}"; do
+    if [[ -n "$auto_msg" ]]; then
+      auto_msg+=", ${p}"
+    else
+      auto_msg="${p}"
+    fi
+  done
+fi
 
 if [[ -z "${user_msg// }" && "${NO_PROMPT}" != true && -t 0 ]]; then
   read -r -p "Commit message (optional; .js filenames appended automatically): " user_msg || true
