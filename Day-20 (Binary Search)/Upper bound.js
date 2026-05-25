@@ -75,5 +75,4 @@ Time Complexity
 
 Space Complexity
     O(1) because the algorithm only uses a fixed number of integer variables (start, end, lowerBound, mid) regardless of the input size.
-
 */
