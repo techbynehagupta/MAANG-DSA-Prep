@@ -3,8 +3,15 @@
  * Run from workspace root: node .cursor/watch-empty-js.mjs
  * Started automatically via .vscode/tasks.json (folder open).
  */
-import { existsSync, readFileSync, statSync, watch, writeFileSync } from "node:fs";
-import { join, normalize, sep } from "node:path";
+import {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  watch,
+  writeFileSync,
+} from "node:fs";
+import { join, normalize, relative, sep } from "node:path";
 
 const ROOT = process.cwd();
 const TEMPLATE_FILE = join(ROOT, "template.md");
@@ -62,6 +69,21 @@ if (template == null) {
   console.error("watch-empty-js: template.md not found at repo root; exiting.");
   process.exit(1);
 }
+
+function scanExistingEmptyJs(dir) {
+  for (const name of readdirSync(dir, { withFileTypes: true })) {
+    const rel = relative(ROOT, join(dir, name.name));
+    if (skipPath(rel)) continue;
+    const abs = join(dir, name.name);
+    if (name.isDirectory()) {
+      scanExistingEmptyJs(abs);
+    } else if (name.isFile() && name.name.endsWith(".js")) {
+      tryFill(abs);
+    }
+  }
+}
+
+scanExistingEmptyJs(ROOT);
 
 try {
   watch(ROOT, { recursive: true }, (_event, filename) => {
