@@ -37,7 +37,6 @@ Example 2
 /*
 # Intuition
 Here, the problem is asking for maximum money the theif can rob, so based on the discussion in previous articles, it is obvious that we think of recursion to solve this problem.
-
 This problem can be tackled using the method outlined in the article on Maximum Sum of non-adjacent elements. It is strongly recommended that readers review that article before proceeding with this one.
 */
 
