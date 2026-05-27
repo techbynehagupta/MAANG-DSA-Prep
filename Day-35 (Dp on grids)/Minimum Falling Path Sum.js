@@ -44,6 +44,10 @@ Example 2
 As the question asks for minimum path sum, the first approach that comes to our mind is to take a greedy approach and always form a path by locally choosing the cheaper option. At every cell, we have three choices, to move to the bottom cell, move to the bottom-left cell or move to the bottom-right cell. Our ultimate aim is to provide a path that provides us the least path sum. Therefore at every cell, we will make the choice to move which costs us less.
 We can clearly see the issue with the greedy solution. When we make local choices, we might select a path that ends up costing us much more later on.
 Therefore, the only alternative left to us is to generate all possible paths and determine which path has the minimum path sum. To generate all paths, we will use recursion.
+
+1. Fill the top most row with default values
+2. for rows below that get minimum out of left, top and right of previous row and add it to current value
+3. return the max value from last row
 */
 
 
