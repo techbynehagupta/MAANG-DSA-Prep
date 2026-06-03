@@ -25,6 +25,19 @@ Example 2
 
 /*
 # Intuition
+    1. We use dp, where dp[i][j] stands for the minimum no. of insertions needed to make the string plaindrome from i to j index
+    2. If the character at both end matches, they can be the part of plaindrome, so no insertion is needed at
+   these positions. we'll be simply solving  for a smaller sub problem from i+!, j-1
+    3. If the charcater doesn't match, we have to insert either the char in str1 or str2, so we have 2 choices
+        a. Insert s[i] near j and solve (i+1, j)
+        b. Insert s[j] near i and solve (i, j-1)
+    4. since 1 insertion is performed at the current step we'll be adding 1 to the minimum of above 2 choices
+    5. Base Case:
+        - If i >= j, the substring has at most one character, which is
+            already a palindrome, so 0 insertions are needed.
+
+    6. Memoization is used to store answers for overlapping substrings,
+   avoiding repeated computations.
 
 */
 
