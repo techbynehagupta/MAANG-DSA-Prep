@@ -37,7 +37,11 @@ Example 2
 
 /*
 # Intuition
-
+    We are given a chain of matrices, and our goal is to find the minimum number of scalar multiplications needed to multiply them together.
+    For every subproblem (i, j), we try making each matrix k (where i ≤ k < j) the last multiplication point, effectively splitting the chain into two smaller parts: (i, k) and (k+1, j).
+    The cost of choosing a split at k is the cost of multiplying the left part, the right part, and then multiplying their resulting matrices: nums[i-1] * nums[k] * nums[j].
+    We recursively compute the minimum cost for all possible splits and keep the smallest one.
+    The base case is when i == j, meaning there is only one matrix left, so no multiplication is required and the cost is 0.
 */
 
 
