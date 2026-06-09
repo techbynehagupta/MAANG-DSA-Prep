@@ -51,6 +51,51 @@ Example 2
 
 
 // Solution
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *      constructor(val = 0, left = null, right = null){
+ *          this.data = val;
+ *          this.left = null;
+ *          this.right = null;
+ *      }
+ * }
+ **/
+class NodeValue{
+    constructor(minNode, maxNode, maxSize){
+        this.minNode = minNode;
+        this.maxNode = maxNode;
+        this.maxSize = maxSize;
+    }
+}
+
+class Solution {
+  largestBSTHelper(root) {
+    if (!root) {
+      return new NodeValue(Infinity, -Infinity, 0);
+    }
+
+    let left = this.largestBSTHelper(root.left);
+    let right = this.largestBSTHelper(root.right);
+
+    if(left.maxNode < root.data && root.data < right.minNode ){
+        return new NodeValue(
+            Math.min(root.data, left.minNode),
+            Math.max(root.data, right.maxNode),
+            1+ left.maxSize + right.maxSize
+        )
+    }
+    return new NodeValue(
+        -Infinity,
+        Infinity,
+        Math.max(left.maxSize, right.maxSize)
+    )
+    
+  }
+  largestBST(root) {
+    return this.largestBSTHelper(root).maxSize;
+  }
+}
 
 
 
@@ -58,4 +103,9 @@ Example 2
 /*
 # Complexity Analysis
 
+Time Complexity
+    O(n) where n is the number of nodes in the binary tree, as each node is visited exactly once by the recursive helper function.
+
+Space Complexity
+    O(h) where h is the height of the tree, representing the maximum recursion depth on the call stack in the worst case (skewed tree O(n), balanced tree O(log n)).
 */
