@@ -54,11 +54,110 @@ Example 2
 
 
 // Solution
-
-
-
-
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *      constructor(val = 0, left = null, right = null){
+ *          this.data = val;
+ *          this.left = null;
+ *          this.right = null;
+ *      }
+ * }
+ **/
+class BSTIterator {
+    constructor(root) {
+      this.stack = [];
+      this.reverseStack = [];
+  
+      this.fill(root);
+      this.fillReverse(root);
+    }
+    fill(root) {
+      if(!root) return;
+  
+      this.stack.push(root);
+  
+      let curr = root;
+      while (curr.left) {
+        this.stack.push(curr.left);
+        curr = curr.left;
+      }
+  
+    }
+    fillReverse(root) {
+      if(!root) return;
+  
+      this.reverseStack.push(root);
+  
+      let curr = root;
+      while(curr.right){
+          this.reverseStack.push(curr.right);
+          curr= curr.right;
+      }
+    }
+  
+    hasNext() {
+      return this.top(this.stack);
+    }
+    hasBefore() {
+      return this.top(this.reverseStack)
+    }
+  
+    next() {
+      if (!this.top(this.stack)) {
+        return null;
+      }
+  
+      let top =  this.stack.pop();
+      let curr = top.right;
+      this.fill(curr);
+  
+      return top.data;
+    }
+  
+    before() {
+      if(!this.top(this.reverseStack)){
+          return null;
+      }
+      let top = this.reverseStack.pop();
+      let curr = top.left;
+      this.fillReverse(curr);
+  
+      return top.data;
+    }
+  
+    top(stack) {
+      let n = stack.length;
+      return n > 0 ? stack[n - 1] : null;
+    }
+  }
+  
+  class Solution {
+    twoSumBST(root, target) {
+      let iterator = new BSTIterator(root);
+  
+      let next  = iterator.next();
+      let before = iterator.before();
+      while(next && before && next != before){
+          let sum =  next + before;
+          if(sum == target){
+              return true;
+          } else if(sum < target){
+              next = iterator.next();
+          }else{
+              before = iterator.before();
+          }
+      }
+      return false;
+    }
+  }
+  
 /*
 # Complexity Analysis
 
+Time Complexity
+    O(n) where n is the number of nodes in the BST, because initialization traverses the height of the tree (O(h)) for both stacks, and the two-pointer approach visits each node at most once.
+
+Space Complexity
+    O(n) where n is the number of nodes in the BST, as the two stacks each store up to O(h) nodes, and in the worst case (a skewed tree), h equals n.
 */
