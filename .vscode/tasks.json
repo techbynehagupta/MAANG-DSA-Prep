@@ -4,15 +4,15 @@
     {
       "label": "Watch empty JS → template.md",
       "type": "shell",
-      "command": "node",
-      "args": [".cursor/watch-empty-js.mjs"],
+      "command": "python3",
+      "args": [".cursor/hooks/apply_js_template.py", "--watch"],
       "isBackground": true,
       "problemMatcher": {
         "owner": "watch-empty-js",
         "pattern": { "regexp": "^$" },
         "background": {
           "activeOnStart": true,
-          "beginsPattern": "^watch-empty-js: watching",
+          "beginsPattern": "^apply_js_template: watching",
           "endsPattern": "^__watch_empty_js_never__$"
         }
       },
