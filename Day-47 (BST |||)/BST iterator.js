@@ -101,11 +101,62 @@ Example 2
 */
 
 // Solution
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *      constructor(val = 0, left = null, right = null){
+ *          this.data = val;
+ *          this.left = null;
+ *          this.right = null;
+ *      }
+ * }
+ **/
 
-
+class BSTIterator {
+    constructor(root) {
+      this.stack = [root];
+      // push all values to the left of root
+      let curr = root;
+      while(curr.left){
+          this.stack.push(curr.left);
+          curr = curr.left;
+      }
+    }
+  
+    hasNext() {
+      return this.top();
+    }
+  
+    next() {
+      let top =  this.stack.pop();
+      if(!top){
+          return null
+      }
+      if(top.right){
+          let right = top.right;
+          this.stack.push(right);
+  
+          while(right.left){
+              this.stack.push(right.left);
+              right = right.left;
+          }
+      }
+      return top.data;
+    }
+  
+    top() {
+      let n = this.stack.length;
+      return n > 0 ? this.stack[n - 1] : null;
+    }
+  }
 
 
 /*
 # Complexity Analysis
 
+Time Complexity
+    O(h) for initialization where h is the height of the tree; O(1) amortized for next() as each node is pushed and popped exactly once.
+
+Space Complexity
+    O(h) where h is the maximum height of the tree, representing the stack storage.
 */
