@@ -73,7 +73,7 @@ class Solution {
         const limit = Math.min(i + k, n - 1);
 
         for (let j = i + 1; j <= limit; j++) {
-            const jumpCost = Math.abs(heights[j] - heights[i]) + this.   frogJumpTopDown(heights, k, j, dp);
+            const jumpCost = Math.abs(heights[j] - heights[i]) + this.frogJumpTopDown(heights, k, j, dp);
 
             minEnergy = Math.min(
                 minEnergy,
@@ -83,23 +83,29 @@ class Solution {
 
         return (dp[i] = minEnergy);
     }
-    frogJumpBottomsUp(heights, k){
+    frogJumpBottomsUp(heights, k) {
         let n = heights.length;
-        let dp = new Array(n).fill(-1);
-        dp[n-1] = 0;
-        for(let i= n-2; i>=0; i--){
-            let j = i+1;
+        let dp = new Array(n).fill(0);
+    
+        dp[n - 1] = 0;
+    
+        for (let i = n - 2; i >= 0; i--) {
             let minEnergy = Infinity;
-            while(j < n){
-                let jumpBoost = Math.abs(heights[j] - heights[i]) + dp[i];
-                minEnergy = Math.min(
-                            jumpBoost, 
-                            minEnergy
-                        );
+    
+            let j = i + 1;
+    
+            while (j < n && j <= i + k) {
+                let jumpCost = Math.abs(heights[j] - heights[i]) + dp[j];
+    
+                minEnergy = Math.min(minEnergy, jumpCost);
+    
+                j++;
             }
+    
             dp[i] = minEnergy;
         }
-        dp[0];
+    
+        return dp[0];
     }
     frogJump(heights, k) {
         let dp = new Array(heights.length).fill(-1);
