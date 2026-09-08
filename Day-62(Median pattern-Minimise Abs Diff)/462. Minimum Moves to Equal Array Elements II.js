@@ -21,7 +21,7 @@
     Output: 16
     
 
-    Constraints:
+    Constraints:mi
 
     n == nums.length
     1 <= nums.length <= 105
