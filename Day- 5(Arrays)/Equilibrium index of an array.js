@@ -103,3 +103,12 @@ function findEquilibrium(A){
 
 // Time Complexity - O(n)
 // Space Complexity - O(n)
+
+
+/*
+Can be solved using ps 
+
+At index i  leftSum = ps[i-1], rightSum = ps[n-1] -ps[i]
+if leftSum == rightSum, `i` is the equilibrium index
+
+*/
