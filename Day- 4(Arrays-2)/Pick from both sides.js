@@ -99,3 +99,5 @@ function pickFromBothSides(A, B){
 
 // Time Complexity - O(n)
 // Space Complexity - O(n)
+
+// We can simplify this by using 2 prefix sum from start and end, and for each i=b take frontps[i] + backps[b-i] and do i--
