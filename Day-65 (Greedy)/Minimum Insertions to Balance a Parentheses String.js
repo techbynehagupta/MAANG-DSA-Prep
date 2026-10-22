@@ -42,6 +42,7 @@ Constraints:
 /*
 # Intuition
 
+Approach - Greedy + 2 pointer
 The overall logic is to get the need of closing brackets if opening brackets are coming and insertion if closing brackets are exceeding our need
 If we are having odd amount of need while encountering any opening bracking then we need to close the previous need by 1
 
