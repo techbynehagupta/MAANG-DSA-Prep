@@ -56,5 +56,6 @@ var containsNearbyDuplicate = function(nums, k) {
 
 /*
 # Complexity Analysis
-
+TC - O(n)
+SC - O(m), where m is the unique values in window of size k+1
 */
