@@ -195,6 +195,46 @@ class MaxHeapNew {
     SC - O(n)
 */
 
+// Solution-2 (Using Monotonic deque)
+
+/*
+    Approach
+    1. Use monotonic decreasing dequeue which maintains queue in increasing order
+    2. We add elements in decreasing order so that the maxm element always remains at the front and we can easilt give max in k size window
+    3. Before adding an element we do these 2 things
+        3.1 Check if our dequeue contains any expired or stale element from window
+        3.2 If current element is greater than elements that are at rear we'll remove them to maintain monotonic dequeue property
+    4. Insert the element index in queue
+    5. take head of the element as result when right reaches window index 
+
+    Note- In monotonic dequeue we generally add indexes to remove 
+    A monotonic deque maintains only useful candidates. The front provides the current maximum or minimum, while expired indices are removed as the window moves.
+*/
+
+
+var maxSlidingWindow = function(nums, k) {
+    let dequeue = [];
+    let result = [];
+    let head = 0;
+    for(let right = 0; right < nums.length; right++){
+        // Remove expired indices
+        // to check the dequeu has element becore accessing it and current element is outside the window
+        if(head < dequeue.length  && dequeue[head] <= (right-k)){
+            head++
+        }
+        // if current value is > than exisitng value means the previpus value is useless for us
+        // Maintain decreasing order
+        while(head < dequeue.length && nums[dequeue[dequeue.length-1]] <= nums[right]){
+            dequeue.pop();
+        }
+        // adding element to queue
+        dequeue.push(right)
+        if(right >= k-1){
+            result.push(nums[dequeue[head]]);
+        }
+    }
+    return result;
+};
 
 /* OPTIMISATION- monotonic deque
     TC - O(n)
